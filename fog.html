@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="style.css" rel="stylesheet">
+<title>FOG</title>
+</head>
+<body>
+<div id="container">
+<header>
+<h1><img src="images/note.png">Hongyun's Notes</h1>
+</header>
+<nav>
+<ul>
+	<li><a href="about.html">About</a>
+    <li><a href="matlab.html">MATLAB</a>
+    <li><a href="fog.html">FOG</a>
+    <li><a href="index.html">Home</a>
+</ul>
+</nav>
+<h2>FOG - A Free Cloning Solution</h2>
+<details open>
+	<summary>Receive blank page when creating tasks in Task Manager</summary>
+	<p>For other users with this issue, here is specifically what I did. I can't guarantee it will work for everyone, 
+	but it seems to have corrected it for me at least:
+<pre>gksu gedit /var/www/fog/management/includes/tasks.confirm.include.php
+Search Menu > Replace
+Search for: &$tmp
+Replace with: $tmp
+Replace All (there were somewhere around twenty instances)
+Save
+Close
+Then try to schedule your upload task again.
+</pre>
+	Reference: <a href="http://fogproject.org/forum/threads/cannot-create-tasks-task-manager-blank.3823/#post-9593"
+				target="_blank">
+				http://fogproject.org/forum/threads/cannot-create-tasks-task-manager-blank.3823/#post-9593</a>
+	</p>
+</details>
+<details>
+	<summary>Upload Error: Extended record needed (1040>1024), not yet supported</summary>
+	<p>On FOG wiki, it provides very detailed solution to this problem, see the link below:<br>
+	<a href="http://www.fogproject.org/wiki/index.php/Error:_extended_record_needed">
+	http://www.fogproject.org/wiki/index.php/Error:_extended_record_needed</a>
+	</p>
+	<p>But in practice, I found the problem usually caused by the file system inconsistency on Linux
+	systems or there are too many fragments on Windows system. So here is how to resolve this issue:</p>
+	<p>On Linux system, boot from PXE admin option, then run the following command on Linux partition:
+	<pre>fsck /dev/sda1</pre> </p>
+	<p>On Windows system, run defragmentation on the system drive</p>
+</details>
+<footer>
+<hr style="margin-top:40px">
+<nav>
+| <a href="index.html">HOME</a> | <a href="fog.html">FOG</a> | <a href="matlab.html">MATLAB</a> |
+ <a href="about.html">ABOUT</a> |
+</nav>
+This page &#169; 2014 by <address style="display:inline"><a href="mailto:hongyun.sun@ubc.ca">Hongyun.</a></address>
+</footer>
+</div>
+</body>
+</html>

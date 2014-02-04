@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="style.css" rel="stylesheet">
+<title>MATLAB</title>
+</head>
+<body>
+<div id="container">
+<header>
+<h1><img src="images/note.png">Hongyun's Notes</h1>
+</header>
+<nav>
+<ul> 
+	<li><a href="about.html">About</a>
+	<li><a href="matlab.html">MATLAB</a>
+    <li><a href="fog.html">FOG</a>
+    <li><a href="index.html">Home</a>
+</ul>
+</nav>
+<h2>MATLAB - The Language of Technical Computing</h2>
+<details>
+<summary>How do I get the FLEXnet License Manager to start automatically at boot time on Linux?</summary>
+<p>There is a boot script provided to start the license manager on Linux systems. 
+This script will be named one of the following: flexnet.boot.linux, rc.lm.linux, rc.lm.glnx86, or rc.lm.glnxa64. 
+This script will be located in MATLAB's etc folder.
+</p>
+<p>To configure the script:</p>
+<ol>
+	<li>Log in as root.
+	<li>Create the following links, if they do not already exist:
+		<pre>ln -s $MATLAB/etc/lmboot /etc/lmboot_TMW
+ln -s $MATLAB/etc/lmdown /etc/lmdown_TMW</pre>
+	(where $MATLAB represents the installation folder for MATLAB on your computer)</li>
+	<li>Make a copy of the appropriate boot script file, and place it in /etc/init.d (or /etc/rc.d/init.d). For example:
+		<pre>cp $MATLAB/etc/flexnet.boot.linux /etc/init.d/flexnet</pre>
+	<li>Ensure that the boot script has execute permissions. For example:
+		<pre>chmod 755 /etc/init.d/flexnet</pre>
+	<li>Edit the copy of the boot script file, replacing the "username" argument with a valid username, other than root. 
+	For security reasons the license manager daemons cannot be owned by superuser. For example change:
+		<pre>if [ -f /etc/lmboot_TMW ]; then
+/etc/lmboot_TMW -u username && echo 'MATLAB_lmgrd'
+fi
+to:
+if [ -f /etc/lmboot_TMW ]; then
+/etc/lmboot_TMW -u iancurtis && echo 'MATLAB_lmgrd'
+fi</pre>
+	<li>Next You will need to determine the appropriate run level for your computer. Generally this is run level 5 for 
+	GUI based systems and 3 for a Linux servers that do not run an Xserver. You may also look in /etc/inittab for the default run level.
+	<li>Create a link in the rc directory associated with the default run level. For example if the run level is 5, then execute the commands in the following table.
+	Choose the appropriate command from below for supported Linux distributions:
+	<pre>Debian:
+cd /etc/rc5.d;
+ln -s ../init.d/flexnet S90Flexnet
+
+Red Hat:
+cd /etc/rc.d/rc5.d;
+ln -s ../init.d/flexnet S90Flexnet
+
+SUSE:
+cd /etc/init.d/rc5.d;
+ln -s ../flexnet S90flexnet
+</pre>
+<p>NOTE: Starting with version 10, SUSE Linux systems may use a parallel boot sequence which may prevent the license manager from starting. 
+See the related solution 1-2I0QQK "Why does the license manager fail to start at boot-time on my SUSE Linux 10 or higher machine?" 
+if you have issues starting the license manager to start on SUSE
+</p>
+</ol>
+<p>Once complete, the license manager should start automatically on the system's restart.</p>
+</details>
+<details open>
+	<summary>How to uninstall MATLAB on Linux</summary>
+	<p>Remove the entire root MATLAB directory using the 'rm -rf' command, ex:
+<pre>[root@localhost ~] rm -rf /usr/local/MATLAB/R2010b</pre>
+</p>
+<p>Remove any symlinks to MATLAB binaries on the path, ex:
+<pre>[root@localhost ~] rm /usr/local/bin/matlab /usr/local/bin/mcc /usr/local/bin/mex /usr/local/bin/mbuild</pre>
+</p>
+</details>
+<footer>
+<hr style="margin-top:40px">
+<nav>
+| <a href="index.html">HOME</a> | <a href="fog.html">FOG</a> | <a href="matlab.html">MATLAB</a> |
+ <a href="about.html">ABOUT</a> |
+</nav>
+This page &#169; 2014 by <address style="display:inline"><a href="mailto:hongyun.sun@ubc.ca">Hongyun.</a></address>
+</footer>
+</div>
+</body>
+</html>
